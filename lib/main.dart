@@ -1,131 +1,103 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const LDSWApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class LDSWApp extends StatelessWidget {
+  const LDSWApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Práctica Widgets Básicos',
+      title: 'LDSW App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const WidgetsBasicosScreen(),
+      home: const HomeScreen(),
     );
   }
 }
 
-class WidgetsBasicosScreen extends StatelessWidget {
-  const WidgetsBasicosScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Widgets Básicos (LDSW)'),
-        backgroundColor: Colors.teal,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 1. WIDGET TEXT
-            const Text(
-              'Demostración de Widgets en Flutter',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.teal,
-              ),
+      // Usamos Stack para superponer elementos (Imagen de fondo + Contenido)
+      body: Stack(
+        children: [
+          // 1. Imagen de fondo que ocupa toda la pantalla
+          Positioned.fill(
+            child: Image.network(
+              'https://images.unsplash.com/photo-1518770660439-4636190af475', // Puedes cambiar esta URL por una imagen local o asset
+              fit: BoxFit.cover,
             ),
-            const SizedBox(height: 15),
+          ),
 
-            // 2. WIDGET CONTAINER
-            Container(
-              padding: const EdgeInsets.all(16.0),
+          // 2. Capa oscura semitransparente para mejorar la lectura del texto
+          Positioned.fill(
+            child: Container(
+              color: Colors.black.withOpacity(0.5),
+            ),
+          ),
+
+          // 3. Contenido principal centrado (Texto, Nombre de la App e Icono)
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(24.0),
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
-                color: Colors.teal.shade50,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.teal.shade200),
+                color: Colors.white.withOpacity(0.85),
+                borderRadius: BorderRadius.circular(16.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
               ),
-              child: const Text(
-                'Este es un Container que engloba contenido, con padding, bordes redondeados y un color de fondo personalizado.',
-                style: TextStyle(fontSize: 15),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // 3. WIDGET ROW
-            const Text('Ejemplo de Row (Fila):', style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(onPressed: () {}, child: const Text('Boton 1')),
-                ElevatedButton(onPressed: () {}, child: const Text('Boton 2')),
-                ElevatedButton(onPressed: () {}, child: const Text('Boton 3')),
-              ],
-            ),
-            const SizedBox(height: 20),
-
-            // 4. WIDGET COLUMN
-            const Text('Ejemplo de Column (Columna):', style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('• Elemento número uno de la columna'),
-                Text('• Elemento número dos de la columna'),
-                Text('• Elemento número tres de la columna'),
-              ],
-            ),
-            const SizedBox(height: 20),
-
-            // 5. WIDGET STACK
-            const Text('Ejemplo de Stack (Elementos superpuestos):', style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Center(
-              child: Stack(
-                alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Contenedor base más grande
-                  Container(
-                    width: 200,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Colors.orange.shade200,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                  // Icono decorativo de la app
+                  const Icon(
+                    Icons.devices_outlined,
+                    size: 64.0,
+                    color: Color(0xFF0076A3),
                   ),
-                  // Contenedor intermedio superpuesto
-                  Container(
-                    width: 140,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: Colors.orange.shade400,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  // Texto superior en el Stack
+                  const SizedBox(height: 16.0),
+
+                  // Nombre de la aplicación
                   const Text(
-                    '¡Superpuestos!',
+                    'LDSW',
                     style: TextStyle(
-                      color: Colors.white,
+                      fontSize: 32.0,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      color: Color(0xFF022933),
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+
+                  // Mensaje de bienvenida
+                  const Text(
+                    'Hello World! Bienvenido a LDSW',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
